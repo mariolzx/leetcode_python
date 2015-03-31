@@ -1,0 +1,22 @@
+class Solution:
+    # @return a list of strings, [s1, s2]
+    def letterCombinations(self, digits):
+        # Mapping table for translating number to letters
+        num2letter = {"2":"abc", "3":"def", "4":"ghi", "5":"jkl", "6":"mno", \
+                      "7":"pqrs", "8":"tuv", "9":"wxyz"}
+
+        # The result for an empty string is an empty string.
+        if len(digits) == 0:                return [""]
+        # We are only handling numbers from 2 to 9.
+        if not digits[0] in num2letter: raise LookupError("Unacceptable input.")
+        # Terminate case for recursion
+        if len(digits) == 1:            return [i for i in num2letter[digits[0]]]
+
+        # The strings for the current digit.
+        temp = [i for i in num2letter[digits[0]]]
+        result = []
+        # Recursion case. Append the recursion result to each string for current digit.
+        for tail in self.letterCombinations(digits[1:]):
+            result.extend([i+tail for i in temp])
+
+        return result
