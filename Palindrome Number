@@ -1,0 +1,22 @@
+class Solution:
+    # @return a boolean
+    def _getDigits(self,x):
+        # Get the number of digits in a non-negative number
+        result = 1
+        while x / 10 != 0:
+            result += 1
+            x /= 10
+        return result
+
+    def _isPalindromeHelper(self, x, high, low):
+        if high <= low:
+            return True
+        elif (x % 10**high) / 10**(high-1) == (x % 10**low) / 10**(low-1):
+            return self._isPalindromeHelper(x, high-1, low+1)
+        else:
+            # The digits in high position and low position are different
+            return False 
+
+    def isPalindrome(self, x):
+        if x < 0:   return False        # All negative numbers are not palindrome
+        else:       return self._isPalindromeHelper(x, self._getDigits(x), 1)
