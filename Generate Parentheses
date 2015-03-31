@@ -1,0 +1,13 @@
+class Solution:
+    # @param two integer: the number of remaining "(" and ")"
+    # @return a list of string
+    def _generateParenthesis(self, n, m):
+        if n == 0:      return [")"*m]
+        elif n == m:    return ["("+i for i in self._generateParenthesis(n-1, m)]
+        else:           return ["("+i for i in self._generateParenthesis(n-1, m)] + \
+                               [")"+i for i in self._generateParenthesis(n, m-1)]
+
+    # @param an integer
+    # @return a list of string
+    def generateParenthesis(self, n):
+        return self._generateParenthesis(n, n)
