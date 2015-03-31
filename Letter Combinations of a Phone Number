@@ -6,9 +6,9 @@ class Solution:
                       "7":"pqrs", "8":"tuv", "9":"wxyz"}
 
         # The result for an empty string is an empty string.
-        if len(digits) == 0:                return [""]
+        if len(digits) == 0:                return []
         # We are only handling numbers from 2 to 9.
-        if not digits[0] in num2letter: raise LookupError("Unacceptable input.")
+       # if not digits[0] in num2letter: raise LookupError("Unacceptable input.")
         # Terminate case for recursion
         if len(digits) == 1:            return [i for i in num2letter[digits[0]]]
 
