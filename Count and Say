@@ -1,0 +1,29 @@
+class Solution:
+    # @return a string
+    def countAndSay(self, n):
+        result = "1"    # The result for n == 1
+        
+        for _ in xrange(n-1):
+            temp = ""   # The result for next round
+            
+            current = result[0]
+            currentCount = 1
+            
+            for item in result[1:]:
+                if item == current:
+                    # Same value as previous
+                    currentCount += 1
+                else:
+                    # Meet with a new value, store the result of
+                    # previous value
+                    temp += str(currentCount) + current
+                    
+                    #Reset these two variables
+                    current = item
+                    currentCount = 1
+            
+            # Store the result for the last unique value
+            temp += str(currentCount) + current
+            result = temp
+        
+        return result
