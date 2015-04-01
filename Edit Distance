@@ -1,0 +1,27 @@
+class Solution:
+    # @return an integer
+    def minDistance(self, word1, word2):
+        ''' Implement the minimum edit distance according to
+            the description of WikiPedia:
+            http://en.wikipedia.org/wiki/Edit_distance
+            Some other implements are available here:
+            http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance
+        '''
+        delCost = insCost = subCost = 1        # The cost for each operation
+        steps = range(len(word1)+1)
+        
+        for word2Index in xrange(len(word2)):
+            diag = steps[0]                     # d(i-1, j-1)
+            steps[0] += 1
+            
+            for word1Index in xrange(len(word1)):
+                temp = steps[word1Index+1]
+                if word1[word1Index] == word2[word2Index]:
+                    steps[word1Index+1] = diag
+                else:
+                    steps[word1Index+1] = min(steps[word1Index+1] + insCost, \
+                                              steps[word1Index] + delCost, \
+                                              diag + subCost)
+                diag = temp                     # Store d(i-1, j-1) for next cell
+                    
+        return steps[-1]
