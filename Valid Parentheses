@@ -1,0 +1,18 @@
+class Solution:
+    # @return a boolean
+    def isValid(self, s):
+        stack = []
+        matchingTable = {"(":")", "[":"]", "{":"}"}
+
+        for letter in s:
+            if letter == "(" or letter == "[" or letter == "{":
+                stack.append(letter)
+            elif letter == ")" or letter == "]" or letter == "}":
+                if len(stack) == 0 or letter != matchingTable[stack.pop()]:
+                    # Unmatched parentheses found
+                    return False
+            else:
+                # Only valid parentheses.
+                pass
+
+        return len(stack) == 0
