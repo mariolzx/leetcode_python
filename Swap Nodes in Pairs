@@ -1,0 +1,37 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    # @param a ListNode
+    # @return a ListNode
+    def swapPairs(self, head):
+        # If it is empty list or one-element list, no need to process
+        if head == None or head.next == None:
+            return head
+
+        # Record the head node of the new list
+        newHead = head.next
+
+        # We are going to travel the list with two nodes each time.
+        current = head
+        previous = None
+        while current != None and current.next != None:
+            # If there is, we need to adjust the previous node so
+            # that it links to the adjusted remaining list in a
+            # right way.
+            if previous != None:
+                previous.next = current.next
+            previous = current
+
+            # Adjust the current two nodes
+            temp = current.next.next
+            current.next.next = current
+            current.next = temp
+
+            # Move to the next round
+            current = current.next
+
+        return newHead
