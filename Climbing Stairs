@@ -1,0 +1,21 @@
+class Solution:
+    # @param n, an integer
+    # @return an integer
+    def climbStairs(self, n):
+        ''' The number of distinct ways to take n steps is
+            the Fibonacci number.
+            http://en.wikipedia.org/wiki/Fibonacci_number
+        '''
+        if  n==0 or n==1: return 1;
+        steps0=1
+        steps1=1
+        steps2=0
+        i=2
+        
+        while i < n + 1:
+            steps2=steps0+steps1;
+            steps0=steps1
+            steps1=steps2
+            i=i+1
+        
+        return steps2
