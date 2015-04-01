@@ -1,0 +1,16 @@
+class Solution:
+    # @param    A       a list of integers
+    # @param    elem    an integer, value need to be removed
+    # @return an integer
+    def removeElement(self, A, elem):
+        front, back = 0, 0
+        
+        while front < len(A):
+            if A[front] != elem:
+                # Not to be removed
+                A[back] = A[front]
+                back += 1
+
+            front += 1
+            
+        return back
