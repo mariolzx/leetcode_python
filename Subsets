@@ -1,0 +1,15 @@
+class Solution:
+    # @param S, a list of integer
+    # @return a list of lists of integer
+    def subsets(self, S):
+        res = []
+        S.sort(reverse=True)
+        self.subsets_rec(S, 0, res)
+        return res
+ 
+    def subsets_rec(self, arr, i, res):
+        if i == len(arr):
+            res.append([])
+        else:
+            self.subsets_rec(arr, i+1, res)
+            res.extend([item + [arr[i]] for item in res])
