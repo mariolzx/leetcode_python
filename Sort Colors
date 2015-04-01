@@ -1,0 +1,28 @@
+class Solution:
+    # @param A a list of integers
+    # @return nothing, sort in place
+    def sortColors(self, A):
+        ''' The one-pass solution is similar with the 3-way
+            quick sort algorithm.
+        '''
+        nextZero = 0            # The position to store the next 0
+        nextTwo = len(A) - 1    # The position to store the next 2
+        
+        index = 0
+        while index <= nextTwo: # !!! BEWARE OF THE RANGE !!!
+            if A[index] == 0:   # May need to be moved to the head.
+                if index == nextZero:
+                    # Already in the head part. No need to move.
+                    index += 1
+                    nextZero += 1
+                else:
+                    # Move the the head part.
+                    A[index], A[nextZero] = A[nextZero], A[index]
+                    nextZero += 1
+            elif A[index] == 2: # Need to be moved to the tail.
+                A[index], A[nextTwo] = A[nextTwo], A[index]
+                nextTwo -= 1
+            else:               # Keep in the middle range.
+                index += 1
+        
+        return
