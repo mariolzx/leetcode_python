@@ -1,0 +1,19 @@
+class Solution:
+    # @param strs, a list of strings
+    # @return a list of strings
+    def anagrams(self, strs):
+        records = {}
+        for string in strs:
+            signature = "".join(sorted([i for i in string]))
+            bucket = records.get(signature, [])
+            bucket.append(string)
+            records[signature] = bucket
+        
+        result = []
+        for bucket in records.values():
+            if len(bucket) > 1:
+                # There are two or more strings, having the same
+                # letter distribution. They are anagrams.
+                result.extend(bucket)
+        
+        return result
