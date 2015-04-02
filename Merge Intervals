@@ -1,0 +1,32 @@
+# Definition for an interval.
+# class Interval:
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+class Solution:
+    # @param intervals, a list of Interval
+    # @return a list of Interval
+    def merge(self, intervals):
+        if len(intervals) == 0:         return []       # Empty input
+        
+        # Sort the input according to the start position
+        intervals.sort(key = lambda x:x.start)
+        
+        previous = Interval(intervals[0].start, intervals[0].end)
+        result = []
+        
+        for interval in intervals[1:]:
+            if interval.start > previous.end:
+                # Cannot merge the current interval with the previous one
+                result.append(previous)
+                previous = Interval(interval.start, interval.end)
+            else:
+                # Merge the current interval with the previous one, by
+                # extending the end position if possible
+                previous.end = max(interval.end, previous.end)
+        
+        # Record the last one interval
+        result.append(previous)
+        
+        return result
