@@ -1,0 +1,42 @@
+# Definition for a  binary tree node
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    # @param root, a tree node
+    # @return a list of lists of integers
+    def zigzagLevelOrder(self, root):
+        if root == None:            return []
+        
+        # In the first stage, we store hte nodes (not their value).
+        result = []
+        nextLayer = [root]
+        left2Right = True       # The direction to travel in current layer.
+        
+        while len(nextLayer) != 0:
+            result.append(nextLayer)
+            
+            # Gather the nodes in the next deeper layer.
+            nextLayer = []
+            left2Right = not left2Right
+            
+            # Access the fathers in previous layer in manner of stack. So
+            # everytime the traversal order is reversed.
+            index = len(result[-1]) - 1
+            while index > -1:
+                father = result[-1][index]
+                if left2Right:
+                    if father.left != None:     nextLayer.append(father.left)
+                    if father.right != None:    nextLayer.append(father.right)
+                else:
+                    if father.right != None:    nextLayer.append(father.right)
+                    if father.left != None:     nextLayer.append(father.left)
+                index -= 1
+        
+        # In the second stage, we convert the nodes into their values.
+        result = [[node.val for node in layer] for layer in result]
+        
+        return result
