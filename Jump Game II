@@ -1,0 +1,18 @@
+class Solution:
+    # @param A, a list of integers
+    # @return an integer
+    def jump(self, A):
+        # steps[i] means the minimum number of jumps needed to reach the position i.
+        steps = [0] * len(A)
+        
+        for index in xrange(len(A)):
+            preSteps = steps[index] # Minimum jumps needing to reach position index
+            step = A[index]         # Maximum jump length at position index
+            
+            # Try to jump with steps of "step" to 1
+            for jump in xrange(step, 0, -1):
+                if index + jump >= len(steps):  continue    # Out of range
+                if steps[index + jump] != 0:    break       # Reached before
+                steps[index + jump] = preSteps + 1
+        
+        return steps[-1]
