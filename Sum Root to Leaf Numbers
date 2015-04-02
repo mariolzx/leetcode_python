@@ -1,0 +1,38 @@
+# Definition for a  binary tree node
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    # @param root, a tree node
+    # @return an array of two integers.
+    #         The first integer is the value
+    #         The second one is the number of digits
+    def sumNumbersHelper(self, root):
+        if root.left == None and root.right == None:
+            return [[root.val, 1]]
+        
+        temp = []
+        if root.left != None:
+            temp.extend(self.sumNumbersHelper(root.left))
+        
+        if root.right != None:
+            temp.extend(self.sumNumbersHelper(root.right))
+
+        result = []
+        for item in temp:
+            result.append([(10**item[1])*root.val+item[0], item[1]+1])
+        
+        return result
+
+    # @param root, a tree node
+    # @return an integer
+    def sumNumbers(self, root):
+        if root == None:
+            return 0
+        else:
+            # Generate all the numbers, represented by each root-to-leaf path.
+            # Then compute their sum.
+            return sum([item[0] for item in self.sumNumbersHelper(root)])
