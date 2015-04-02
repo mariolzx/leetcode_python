@@ -1,0 +1,21 @@
+class Solution:
+    # @param grid, a list of lists of integers
+    # @return an integer
+    def minPathSum(self, grid):
+        # Similar with the minimum edit distance algorithm
+        colLen = len(grid)
+        column = [-1] * colLen
+        
+        # Go through the first column
+        column[0] = grid[0][0]
+        for index in xrange(1, colLen):
+            column[index] = grid[index][0] + column[index-1]
+        
+        # Go through the remaining cells column by column
+        for colIndex in xrange(1, len(grid[0])):
+            column[0] += grid[0][colIndex]
+            for rowIndex in xrange(1, colLen):
+                column[rowIndex] = min(column[rowIndex], column[rowIndex-1]) \
+                                   + grid[rowIndex][colIndex]
+        
+        return column[-1]
