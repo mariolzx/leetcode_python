@@ -5,4 +5,4 @@ class Solution:
        # return ' '.join(re.compile('\s+').split(s.strip())[::-1])
         return ' '.join(re.split('\s+', s.strip())[::-1])
         #s.strip() delete leading and traing white spaces
-        #bothe sentences are the same
+        #both sentences are the same
