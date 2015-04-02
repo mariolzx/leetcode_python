@@ -1,0 +1,11 @@
+class Solution:
+    # @param obstacleGrid, a list of lists of integers
+    # @return an integer
+    def uniquePathsWithObstacles(self, obstacleGrid):
+        m, n = len(obstacleGrid), len(obstacleGrid[0])
+        DP = [[1-cell for cell in row] for row in obstacleGrid]
+        for i in xrange(0, m):
+            for j in xrange(0, n):
+                if not obstacleGrid[i][j]:
+                    DP[i][j] = 1 if i == j == 0 else (DP[i-1][j] if i > 0 else 0) + (DP[i][j-1] if j > 0 else 0)
+        return DP[m-1][n-1]
