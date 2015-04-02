@@ -1,0 +1,80 @@
+class Solution:
+    # @param board, a 2D array
+    # Capture all regions by modifying the input board in-place.
+    # Do not return any value.
+    def solve(self, board):
+        ''' We need to flip all 'O's into 'X's in these surrounded region.
+            If we solve this challenge directly by finding out the surrounded
+            region, it is difficult. So we might consider this question from
+            another direction: which "O" nodes should be kept?
+        '''
+        
+        if len(board) == 0:     return
+        
+        toKeep = [[False] * len(board[0]) for _ in xrange(len(board))]
+        
+        # Treat the board as a graph. Assume the adjacent nodes are
+        # connected in the graph. Then we are going to do a BFS traversal
+        # to find out all the nodes, which are connecting to periphery
+        # "O" nodes.
+        layer = []
+        
+        # We initialize the layer with the periphery "O" nodes to do a 
+        # BFS traversal.
+        for column in xrange(len(board[0])):
+            if board[0][column] == "O":
+                toKeep[0][column] = True
+                layer.append([0, column])
+            if board[-1][column] == "O":
+                toKeep[-1][column] = True
+                layer.append([len(board)-1, column])  
+        for row in xrange(len(board)):
+            if board[row][0] == "O":
+                toKeep[row][0] = True
+                layer.append([row, 0])
+            if board[row][-1] == "O":
+                toKeep[row][-1] = True
+                layer.append([row, len(board[0])-1])
+        
+        # Going to fished the BFS
+        while len(layer) != 0:
+            temp = []
+            for keptNode in layer:
+                # Try the upper node
+                if keptNode[0] != 0 and \
+                   board[keptNode[0]-1][keptNode[1]] == "O" and \
+                   toKeep[keptNode[0]-1][keptNode[1]] == False:
+                    toKeep[keptNode[0]-1][keptNode[1]] = True
+                    temp.append([keptNode[0]-1, keptNode[1]])
+                    
+                # Try the lower node
+                if keptNode[0] != len(board)-1 and \
+                   board[keptNode[0]+1][keptNode[1]] == "O" and \
+                   toKeep[keptNode[0]+1][keptNode[1]] == False:
+                    toKeep[keptNode[0]+1][keptNode[1]] = True
+                    temp.append([keptNode[0]+1, keptNode[1]])
+                
+                # Try the left node
+                if keptNode[1] != 0 and \
+                   board[keptNode[0]][keptNode[1]-1] == "O" and \
+                   toKeep[keptNode[0]][keptNode[1]-1] == False:
+                    toKeep[keptNode[0]][keptNode[1]-1] = True
+                    temp.append([keptNode[0], keptNode[1]-1])
+                    
+                # Try the right node
+                if keptNode[1] != len(board[0])-1 and \
+                   board[keptNode[0]][keptNode[1]+1] == "O" and \
+                   toKeep[keptNode[0]][keptNode[1]+1] == False:
+                    toKeep[keptNode[0]][keptNode[1]+1] = True
+                    temp.append([keptNode[0], keptNode[1]+1])
+            layer = temp
+        
+        # Change the contents in boards according to the flags in toKeep.
+        for row in xrange(len(board)):
+            for column in xrange(len(board[0])):
+                if board[row][column] == "X":
+                    continue
+                if toKeep[row][column] == False:
+                    board[row][column] = "X"
+             
+        return
