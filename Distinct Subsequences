@@ -1,0 +1,15 @@
+class Solution:
+    # @return an integer
+    def numDistinct(self, S, T):
+        cache = [0] * (len(T)+1)
+        cache[0] = 1
+        
+        for indexS in xrange(len(S)):
+            pre = cache[0]
+            for indexT in xrange(len(T)):
+                current = cache[indexT+1]
+                if S[indexS] == T[indexT]:
+                    cache[indexT+1] += pre
+                pre = current 
+        
+        return cache[-1]
